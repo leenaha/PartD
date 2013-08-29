@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Wine Search</title>
+        
+        <!-- Le styles -->
+        <link href="bootstrap/docs/assets/css/bootstrap.css" rel="stylesheet">
+        <style>
+            .table th, .table td {
+                border-top:0px;
+            }
+        </style>
+
+    </head>
+	
+	<body>
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="alert alert-info"><i class='icon-search'></i> <b>Wine Search Filter</b></div>
+                    <div class="container" style="width:550px;">
+                               
+                <form class="form-horizontal well" action="result.php" method="get">
+
+                    <div class="control-group">
+                      <label class="control-label" for="wineName">Name of Wine</label>
+                      <div class="controls">
+                        <input type="text" id="wineName" name="wineName" placeholder="Wine Name">
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <label class="control-label" for="wineryName">Name of Winery</label>
+                      <div class="controls">
+                        <input type="text" id="wineryName" name="wineryName" placeholder="Winery Name">
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <label class="control-label" for="grapeVariety">Grape Variety</label>
+                      <div class="controls">
+                        <select name="grapeVariety">
+							<option value='0'>All</option>
+							<!-- $BeginBlock grapeVariety -->
+								<option value=${variety_id}>${variety_name}</option>
+							<!-- $EndBlock grapeVariety -->
+							</select>
+                      </div>
+                    </div>
+                    
+                    <div class="control-group">
+                      <label class="control-label" for="regionName">Region</label>
+                      <div class="controls">
+                        <select name="region">
+							<!-- $BeginBlock region -->
+								<option value=${region_id}>${region_name}</option>
+							<!-- $EndBlock region -->
+						</select>
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <label class="control-label" for="minYear">Minimum of Years</label>
+                      <div class="controls">
+                            <select class="input-small" id="minYear" name="minYear">
+							<!-- $BeginBlock yearAsc -->
+								<option>${year_asc}</option>
+							<!-- $EndBlock yearAsc -->	
+							</select>
+                            - Maximum Years 
+                            <select class="input-small" id="maxYear" name="maxYear">
+								<!-- $BeginBlock yearDesc -->
+								<option>${year_desc}</option>
+								<!-- $EndBlock yearDesc -->	
+							</select>
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <label class="control-label" for="minWineInStock">Minimum no. of wines in stock</label>
+                      <div class="controls">
+                        <input type="text" id="minWineInStock" name="minWineInStock" placeholder="" class="input-mini">
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <label class="control-label" for="minWineInStock">Minimum no. of wines orders</label>
+                      <div class="controls">
+                        <input type="text" id="minWineOrdered" name="minWineOrdered" placeholder="" class="input-mini">
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <label class="control-label" for="minPrice">Minimum Price</label>  
+                      <div class="controls">
+						<div class="input-prepend input-append">
+						  <span class="add-on">$</span>
+						  <input type="text" id="minPrice" name="minPrice" placeholder="" class="input-mini">
+						  <span class="add-on">.00</span>
+						</div>
+                      </div>
+                    </div>
+					
+					<div class="control-group">
+                      <label class="control-label" for="minPrice">Maximum Price</label>  
+                      <div class="controls">
+						<div class="input-prepend input-append">
+						  <span class="add-on">$</span>
+						  <input type="text" id="maxPrice" name="maxPrice" placeholder="" class="input-mini">
+						  <span class="add-on">.00</span>
+						</div>
+                      </div>
+                    </div>
+			
+                    <div class="form-actions">
+					  <button type="submit" class="btn btn-primary">Submit</button>
+					  <button type="reset" class="btn">Reset</button>
+					</div>
+                </form>
+             </div> 
+        </div><!-- closes row fluid -->
+      </div>
+    </body>
+	
+	<script>
+	$(document).ready(function(){
+		var lastSelect = $('select option:last').val();
+		alert(lastSelect);
+	});
+	</script>
+	
+</html>

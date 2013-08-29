@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Wine Search Results</title>
+        
+        <!-- Le styles -->
+        <link href="bootstrap/docs/assets/css/bootstrap.css" rel="stylesheet">
+        <style>
+            .table th, .table td {
+                border-top:0px;
+            }
+        </style>
+    </head>   
+
+   <body>
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="alert alert-info"><i class='icon-search'></i> <b>Wine Search Filter</b></div>
+				
+				<!-- $BeginBlock countResult -->
+				<div class="alert alert-success" style="width:91%; margin:auto;">
+					<b>${counter} results returned</b> 
+				</div>
+				<!-- $EndBlock countResult -->
+				</br>
+                <table class="table table-bordered table-striped" style="width:95%; margin:auto;">
+                    
+					<th>ID</th>
+                    <th>Wine Name</th>
+                    <th>Grape Variety</th>
+                    <th>Year</th>
+                    <th>Winery Name</th>
+                    <th>Region</th>
+                    <th>Cost of wine in inventory</th>
+                    <th>Total Number of bottles avail.</th>
+                    <th>Total stock sold of wine</th>
+                    <th>Total Sales Revenue of wine</th>
+					<!-- $BeginBlock wineResults -->
+					<tr>
+					<td>${wine_id}</td>
+					<td>${wine_name}</td>
+					<td>${grape_variety}</td>
+					<td>${wine_year}</td>
+					<td>${winery_name}</td>
+					<td>${region_name}</td>
+					<td>${cost}</td>
+					<td>${on_hand}</td>
+					<td>${quantity}</td>
+					<td>${revenue}</td>
+					</tr>
+					<!-- $EndBlock wineResults -->
+                </table>
+			</div>
+        </div><!-- close span12 -->
+		<br/>
+    </body>
+</html>
