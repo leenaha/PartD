@@ -4,57 +4,44 @@ require_once("db.php");
 require_once ("MiniTemplator.class.php");
 	
 function generateFilterPage(){	
-	
-	echo ('hello!');
 	try 
 	{
 		$dsn = DB_ENGINE .':host='. DB_HOST .';dbname='. DB_NAME;
 		$db = new PDO($dsn, DB_USER, DB_PW);
+		
+		$t = new MiniTemplator;
+		$ok = $t->readTemplateFromFile("index.html");
+		if (!$ok) die ("MiniTemplator.readTemplateFromFile failed.");
+		
+		$query = "SELECT variety_id, variety 
+					FROM grape_variety";
+		foreach($db->query($query) as $row){
+			$variety_id = $row['variety_id'];
+			$variety_name = $row['variety'];
+			$t->setVariable("variety_id",$variety_id);
+			$t->setVariable("variety_name",$variety_name);
+			$t->addBlock("grapeVariety");
+		}
+		
+		$query = "SELECT region_name, region_id 
+					FROM region";
+		foreach($db->query($query) as $row){
+			$region_id = $row['region_id'];
+			$region_name = $row['region_name'];
+			$t->setVariable ("region_id",$region_id);
+			$t->setVariable ("region_name",$region_name);
+			$t->addBlock ("region");
+		}
+		
+		$db = null;
+		
+		$t->generateOutput();
 	}
 	catch (PDOException $e)
 	{
 		echo $e->getMessage();
 	}
 
-	
-	$t = new MiniTemplator;
-	$ok = $t->readTemplateFromFile("index.html");
-	if (!$ok) die ("MiniTemplator.readTemplateFromFile failed.");
-    
-	$query = "SELECT variety_id, variety 
-				FROM grape_variety";
-				
-	foreach ($db­>query($query) as $row) {
-		$variety_id = $row['variety_id'];
-		$variety_name = $row['variety'];
-		$t->setVariable ("variety_id",$variety_id);
-		$t->setVariable ("variety_name",$variety_name);
-		$t->addBlock ("grapeVariety");
-	}	
-				
-	// $result = mysql_query($query);
-	// while($query_data = mysql_fetch_array($result)){
-		// $variety_id = $query_data["variety_id"];
-		// $variety_name = $query_data["variety"];
-		
-		// $t->setVariable ("variety_id",$variety_id);
-		// $t->setVariable ("variety_name",$variety_name);
-		// $t->addBlock ("grapeVariety");
-	// } 
-	
-	$query = "SELECT region_name, region_id 
-				FROM region";
-	foreach ($db­>query($query) as $row) {
-		$region_id = $row['region_id'];
-		$region_name = $row['region_name'];
-		$t->setVariable ("region_id",$region_id);
-		$t->setVariable ("region_name",$region_name);
-		$t->addBlock ("region");
-	}
-	
-	// $query = "SELECT region_name, region_id 
-				// FROM region";
-	// $result = mysql_query($query);
 	// while($query_data = mysql_fetch_array($result)){
 		// $region_id = $query_data["region_id"];
 		// $region_name = $query_data["region_name"];
@@ -63,19 +50,7 @@ function generateFilterPage(){
 		// $t->setVariable ("region_name",$region_name);
 		// $t->addBlock ("region");
 	// } 
-	
-	$query = "SELECT DISTINCT year
-				FROM wine
-				ORDER BY  wine.year ASC";
-	
-	foreach ($db­>query($query) as $row) {
-		$region_id = $row['region_id'];
-		$region_name = $row['region_name'];
-		$t->setVariable ("region_id",$region_id);
-		$t->setVariable ("region_name",$region_name);
-		$t->addBlock ("region");
-	}
-	
+
 	// $query = "SELECT DISTINCT year
 				// FROM wine
 				// ORDER BY  wine.year ASC";
@@ -85,23 +60,7 @@ function generateFilterPage(){
 		// $t->setVariable ("year_asc", $year_asc);
 		// $t->addBlock ("yearAsc");
 	// } 
-	
-	$query = "SELECT DISTINCT year
-				FROM wine
-				ORDER BY  wine.year DESC";
-				
-	foreach ($db­>query($query) as $row) {
-		$year_desc = $row['year'];
-		$t->setVariable ("year_desc", $year_asc);
-		$t->addBlock ("yearDesc");
-	}
-	
-	foreach ($db­>query($query) as $row) {
-		$year_asc = $row['year'];
-		$t->setVariable ("year_asc", $year_asc);
-		$t->addBlock ("yearAsc");
-	}
-	
+	 
 	// $query = "SELECT DISTINCT year
 				// FROM wine
 				// ORDER BY  wine.year DESC";
@@ -112,7 +71,7 @@ function generateFilterPage(){
 		// $t->addBlock ("yearDesc");
 	// } 
 
-	$t->generateOutput();
+	// $t->generateOutput();
 }
 generateFilterPage();
 
